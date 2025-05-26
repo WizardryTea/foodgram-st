@@ -7,7 +7,7 @@ import api from "./api";
 import styles from "./styles.module.css";
 
 import {
-  // About,
+  About,
   Main,
   Cart,
   SignIn,
@@ -22,7 +22,7 @@ import {
   NotFound,
   UpdateAvatar,
   ResetPassword,
-  // Technologies,
+  Technologies,
 } from "./pages";
 
 import { AuthContext, UserContext } from "./contexts";
@@ -204,14 +204,6 @@ function App() {
       setLoggedIn(false);
     }
   }, []);
-
-  // useEffect(() => {
-  //   document.addEventListener('keydown', function(event) {
-  //     if (event.ctrlKey && event.shiftKey && event.key === 'z') {
-  //       alert('зиги - добар пас!');
-  //     }
-  //   });
-  // }, [])
 
   if (loggedIn === null) {
     return <div className={styles.loading}>Загрузка...</div>;

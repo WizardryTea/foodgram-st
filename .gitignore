@@ -1,6 +1,8 @@
 frontend/node_modules
 infra/frontend/build
 .env
+**/ruff_cache/
+**/migrations/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -140,3 +142,5 @@ dmypy.json
 
 static/
 media/
+
+*.sqlite3
