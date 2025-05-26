@@ -98,7 +98,6 @@ DATABASES = {
     # }
     "default": {
         "ENGINE": os.getenv("ENGINE", "django.db.backends.postgresql"),
-        # 'NAME': os.getenv('POSTGRES_NAME', 'foodgram'),
         "NAME": os.getenv("POSTGRES_NAME", "foodgram"),
         "USER": os.getenv("POSTGRES_USER", "foodgram_user"),
         "PASSWORD": os.getenv("POSTGRES_PASSWORD", "12345678"),
@@ -172,7 +171,9 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_PAGINATION_CLASS": "api.pagination.PagesPagination",
     "PAGE_SIZE": 6,
-    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
+    "DEFAULT_FILTER_BACKENDS": [
+        "django_filters.rest_framework.DjangoFilterBackend"
+    ],
 }
 
 DJOSER = {

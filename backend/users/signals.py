@@ -1,5 +1,5 @@
 import os
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 from django.conf import settings
 
@@ -26,3 +26,30 @@ def delete_old_avatar(sender, instance, **kwargs):
                 os.remove(old_avatar_path)
     except User.DoesNotExist:
         pass
+
+
+@receiver(post_save, sender=User)
+def set_default_avatar(sender, instance, created, **kwargs):
+    """Устанавливает аватар для админа."""
+    if created and not instance.avatar:
+        default_avatar_path = os.path.join(
+            settings.BASE_DIR,
+            'data',
+            'images',
+            'test-images',
+            f'face{instance.id % 6 + 1}.png'
+        )
+
+        if os.path.exists(default_avatar_path):
+            avatar_dir = os.path.join(settings.MEDIA_ROOT, 'avatars')
+            os.makedirs(avatar_dir, exist_ok=True)
+
+            import shutil
+            new_avatar_path = os.path.join(
+                avatar_dir,
+                f'user_{instance.id}_avatar.png'
+            )
+            shutil.copy2(default_avatar_path, new_avatar_path)
+
+            instance.avatar = f'avatars/user_{instance.id}_avatar.png'
+            instance.save(update_fields=['avatar'])

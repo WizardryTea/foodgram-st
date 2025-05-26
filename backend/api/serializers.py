@@ -183,14 +183,22 @@ class SubscribedUserSerializer(UserSerializer):
                 recipes_limit = int(recipes_limit)
             except ValueError:
                 raise ValidationError(
-                    {"detail": 'Параметр "recipes_limit" '
-                    'должен быть целым числом.'}
+                    {
+                        "detail": (
+                            'Параметр "recipes_limit" '
+                            'должен быть целым числом.'
+                        )
+                    }
                 )
 
             if recipes_limit < 1:
                 raise ValidationError(
-                    {"detail": 'Параметр "recipes_limit"'
-                    ' должен быть больше 0.'}
+                    {
+                        "detail": (
+                            'Параметр "recipes_limit"'
+                            ' должен быть больше 0.'
+                        )
+                    }
                 )
 
             recipes = author.recipes.all()[:recipes_limit]

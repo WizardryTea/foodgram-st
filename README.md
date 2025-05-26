@@ -106,7 +106,7 @@ Python, Django, Django REST Framework, Djoser
     ```
 4. Заполните базу тестовыми данными:
 
-4.1. Загрузите список ингредиентов
+4.1. Загрузите список ингредиентов:
     ```bash
     docker-compose exec backend python manage.py load_ingredients
     ```

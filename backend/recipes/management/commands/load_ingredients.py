@@ -47,10 +47,12 @@ class Command(BaseCommand):
 
             self.stdout.write(
                 self.style.SUCCESS(
-                    f"Завершено! Успешно загружено {created_count} "
-                    "ингредиентов из {total_items} записей."
+                    f'Завершено! Успешно загружено {created_count} '
+                    f'ингредиентов из {total_items} записей.'
                 )
             )
         except Exception as e:
             self.stderr.write(
-                self.style.ERROR(f"Ошибка при загрузке данных: {str(e)}"))
+                self.style.ERROR(
+                    f"Ошибка при загрузке данных: {str(e)}")
+                )

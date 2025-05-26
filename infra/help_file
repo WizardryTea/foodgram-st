@@ -17,6 +17,7 @@ docker-compose exec backend python manage.py collectstatic --noinput --clear
 # Загрузка данных
 docker-compose exec backend python manage.py load_ingredients
 docker-compose exec backend python manage.py load_users
+docker-compose exec backend python manage.py set_default_avatars
 docker-compose exec backend python manage.py load_recipes
 
 # Создание суперпользователя с заданными данными
