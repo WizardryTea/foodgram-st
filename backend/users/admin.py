@@ -23,15 +23,11 @@ class UserAdmin(UserAdmin):
 
     @admin.display(description="Персонал")
     def is_staff_display(self, obj):
-        return format_html(
-            "✓" if obj.is_staff else "✗"
-        )
+        return format_html("✓" if obj.is_staff else "✗")
 
     @admin.display(description="Администратор")
     def is_superuser_display(self, obj):
-        return format_html(
-            "✓" if obj.is_superuser else "✗"
-        )
+        return format_html("✓" if obj.is_superuser else "✗")
 
 
 @admin.register(Subscription)

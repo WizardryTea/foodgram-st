@@ -19,26 +19,15 @@ class Command(BaseCommand):
         )
 
         avatars_dir = os.path.join(
-            settings.MEDIA_ROOT,
-            "data",
-            "images",
-            "avatars"
+            settings.MEDIA_ROOT, "data", "images", "avatars"
         )
         recipes_dir = os.path.join(
-            settings.MEDIA_ROOT,
-            "data",
-            "images",
-            "recipes"
+            settings.MEDIA_ROOT, "data", "images", "recipes"
         )
 
         if os.path.exists(avatars_dir):
             for filename in os.listdir(avatars_dir):
-                file_path = os.path.join(
-                    "data",
-                    "images",
-                    "avatars",
-                    filename
-                )
+                file_path = os.path.join("data", "images", "avatars", filename)
                 if file_path not in avatar_images:
                     full_path = os.path.join(settings.MEDIA_ROOT, file_path)
                     try:
@@ -47,18 +36,11 @@ class Command(BaseCommand):
                             f"Deleted unused avatar: {file_path}"
                         )
                     except OSError as e:
-                        self.stdout.write(
-                            f"Error deleting {file_path}: {e}"
-                        )
+                        self.stdout.write(f"Error deleting {file_path}: {e}")
 
         if os.path.exists(recipes_dir):
             for filename in os.listdir(recipes_dir):
-                file_path = os.path.join(
-                    "data",
-                    "images",
-                    "recipes",
-                    filename
-                )
+                file_path = os.path.join("data", "images", "recipes", filename)
                 if file_path not in recipe_images:
                     full_path = os.path.join(settings.MEDIA_ROOT, file_path)
                     try:

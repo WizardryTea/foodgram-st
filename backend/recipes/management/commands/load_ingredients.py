@@ -41,18 +41,15 @@ class Command(BaseCommand):
                         created_count += 1
 
                 progress = 100 * (progress_bar.n / total_items)
-                progress_bar.set_postfix(
-                    {"Прогресс": f"{progress:.1f}%"}
-                )
+                progress_bar.set_postfix({"Прогресс": f"{progress:.1f}%"})
 
             self.stdout.write(
                 self.style.SUCCESS(
-                    f'Завершено! Успешно загружено {created_count} '
-                    f'ингредиентов из {total_items} записей.'
+                    f"Завершено! Успешно загружено {created_count} "
+                    f"ингредиентов из {total_items} записей."
                 )
             )
         except Exception as e:
             self.stderr.write(
-                self.style.ERROR(
-                    f"Ошибка при загрузке данных: {str(e)}")
-                )
+                self.style.ERROR(f"Ошибка при загрузке данных: {str(e)}")
+            )

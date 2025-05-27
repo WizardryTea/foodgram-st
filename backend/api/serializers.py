@@ -4,8 +4,13 @@ from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers
 
 from constants import RECIPE_INGREDIENT_MIN_AMOUNT
-from recipes.models import (Favorite, Ingredient, Recipe, RecipeIngredient,
-                            ShoppingCart)
+from recipes.models import (
+    Favorite,
+    Ingredient,
+    Recipe,
+    RecipeIngredient,
+    ShoppingCart,
+)
 from users.models import Subscription
 
 
@@ -46,24 +51,17 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
     measurement_unit = serializers.ReadOnlyField(
         source="ingredient.measurement_unit"
     )
-    amount = serializers.IntegerField(
-        min_value=RECIPE_INGREDIENT_MIN_AMOUNT
-    )
+    amount = serializers.IntegerField(min_value=RECIPE_INGREDIENT_MIN_AMOUNT)
 
     class Meta:
         model = RecipeIngredient
-        fields = (
-            "id",
-            "name",
-            "measurement_unit",
-            "amount")
+        fields = ("id", "name", "measurement_unit", "amount")
 
 
 class RecipeSerializer(serializers.ModelSerializer):
     author = UserSerializer(read_only=True)
     ingredients = RecipeIngredientSerializer(
-        source="recipe_ingredients",
-        many=True
+        source="recipe_ingredients", many=True
     )
     is_favorited = serializers.SerializerMethodField()
     is_in_shopping_cart = serializers.SerializerMethodField()
@@ -96,8 +94,7 @@ class RecipeSerializer(serializers.ModelSerializer):
             )
 
         ingredient_ids = [
-            ingredient["ingredient"]["id"]
-            for ingredient in ingredients
+            ingredient["ingredient"]["id"] for ingredient in ingredients
         ]
         if len(set(ingredient_ids)) != len(ingredient_ids):
             raise serializers.ValidationError(
@@ -185,8 +182,8 @@ class SubscribedUserSerializer(UserSerializer):
                 raise ValidationError(
                     {
                         "detail": (
-                            'Параметр "recipes_limit" '
-                            'должен быть целым числом.'
+                            'Параметр "recipes_limit" должен быть '
+                            "целым числом."
                         )
                     }
                 )
@@ -195,8 +192,7 @@ class SubscribedUserSerializer(UserSerializer):
                 raise ValidationError(
                     {
                         "detail": (
-                            'Параметр "recipes_limit"'
-                            ' должен быть больше 0.'
+                            'Параметр "recipes_limit"' " должен быть больше 0."
                         )
                     }
                 )
@@ -226,8 +222,7 @@ class SubscriptionSerializer(serializers.ModelSerializer):
             )
 
         if Subscription.objects.filter(
-            follower=request.user,
-            author=author
+            follower=request.user, author=author
         ).exists():
             raise serializers.ValidationError(
                 {"detail": "Подписка уже оформлена."}

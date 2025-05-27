@@ -22,7 +22,7 @@ class Command(BaseCommand):
             ).exists():
                 self.stdout.write(
                     f'Аккаунт с именем "{account_info["username"]}"'
-                    ' уже зарегистрирован'
+                    " уже зарегистрирован"
                 )
                 continue
 

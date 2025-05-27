@@ -2,10 +2,13 @@
 from django.core.validators import MinValueValidator
 from django.db import models
 
-from constants import (INGREDIENT_MEASUREMENT_UNIT_MAX_LENGTH,
-                       INGREDIENT_NAME_MAX_LENGTH,
-                       RECIPE_INGREDIENT_MIN_AMOUNT, RECIPE_MIN_COOKING_TIME,
-                       RECIPE_NAME_MAX_LENGTH)
+from constants import (
+    INGREDIENT_MEASUREMENT_UNIT_MAX_LENGTH,
+    INGREDIENT_NAME_MAX_LENGTH,
+    RECIPE_INGREDIENT_MIN_AMOUNT,
+    RECIPE_MIN_COOKING_TIME,
+    RECIPE_NAME_MAX_LENGTH,
+)
 from users.models import User
 
 
@@ -27,7 +30,7 @@ class Ingredient(models.Model):
         constraints = [
             models.UniqueConstraint(
                 fields=["name", "measurement_unit"],
-                name="unique_name_measurement_unit"
+                name="unique_name_measurement_unit",
             )
         ]
         ordering = ("name",)
@@ -40,8 +43,8 @@ class Recipe(models.Model):
     """Модель рецептов."""
 
     name = models.CharField(
-        verbose_name="Название",
-        max_length=RECIPE_NAME_MAX_LENGTH)
+        verbose_name="Название", max_length=RECIPE_NAME_MAX_LENGTH
+    )
 
     text = models.TextField(verbose_name="Описание")
 
@@ -58,9 +61,7 @@ class Recipe(models.Model):
     )
 
     author = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        verbose_name="Автор"
+        User, on_delete=models.CASCADE, verbose_name="Автор"
     )
 
     cooking_time = models.PositiveIntegerField(
@@ -75,8 +76,8 @@ class Recipe(models.Model):
     )
 
     created_at = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name="Дата создания")
+        auto_now_add=True, verbose_name="Дата создания"
+    )
 
     class Meta:
         verbose_name = "Рецепт"
@@ -92,9 +93,7 @@ class RecipeIngredient(models.Model):
     """Промежуточная модель для связи рецептов с ингредиентами."""
 
     recipe = models.ForeignKey(
-        Recipe,
-        on_delete=models.CASCADE,
-        verbose_name="Рецепт"
+        Recipe, on_delete=models.CASCADE, verbose_name="Рецепт"
     )
 
     ingredient = models.ForeignKey(
@@ -117,7 +116,7 @@ class RecipeIngredient(models.Model):
         constraints = [
             models.UniqueConstraint(
                 fields=["recipe", "ingredient"],
-                name="unique_recipe_ingredient"
+                name="unique_recipe_ingredient",
             )
         ]
         default_related_name = "recipe_ingredients"

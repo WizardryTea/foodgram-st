@@ -1,8 +1,9 @@
 from rest_framework.pagination import PageNumberPagination
 
-from constants import (\
+from constants import (
     PAGES_PAGINATION_PAGE_SIZE,
-    PAGES_PAGINATION_PAGE_SIZE_QUERY_PARAM)
+    PAGES_PAGINATION_PAGE_SIZE_QUERY_PARAM,
+)
 
 
 class PagesPagination(PageNumberPagination):
