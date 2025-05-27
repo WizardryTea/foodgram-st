@@ -106,22 +106,22 @@ Python, Django, Django REST Framework, Djoser
     ```
 4. Заполните базу тестовыми данными:
 
-4.1. Загрузите список ингредиентов:
-    ```bash
-    docker-compose exec backend python manage.py load_ingredients
-    ```
-4.2. Загрузите данные тестовых пользователей:
-    ```bash
-    docker-compose exec backend python manage.py load_users
-    ```
-4.3. Установите аватары тестовых пользователей:
-    ```bash
-    docker-compose exec backend python manage.py set_default_avatars
-    ```
-4.4. Загрузите рецепты тестовых пользователей:
-    ```bash
-    docker-compose exec backend python manage.py load_recipes
-    ```
+    4.1. Загрузите список ингредиентов:
+        ```bash
+        docker-compose exec backend python manage.py load_ingredients
+        ```
+    4.2. Загрузите данные тестовых пользователей:
+        ```bash
+        docker-compose exec backend python manage.py load_users
+        ```
+    4.3. Установите аватары тестовых пользователей:
+        ```bash
+        docker-compose exec backend python manage.py set_default_avatars
+        ```
+    4.4. Загрузите рецепты тестовых пользователей:
+        ```bash
+        docker-compose exec backend python manage.py load_recipes
+        ```
        
 5. Создайте суперпользователя:
     ```bash
@@ -160,5 +160,5 @@ Python, Django, Django REST Framework, Djoser
 
 Форматирование кода выполнено согласно PEP-8, используя:
 - https://pypi.org/project/isort/
-- https://pypi.org/project/black/
+- https://pypi.org/project/black/ (команда black --line-length 79 .)
 - https://pypi.org/project/pep8/
