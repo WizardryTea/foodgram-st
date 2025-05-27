@@ -5,7 +5,7 @@
 
 Проект «Фудграм» — сайт, на котором пользователи будут публиковать свои рецепты, добавлять чужие рецепты в избранное и подписываться на публикации других авторов. Зарегистрированным пользователям также будет доступен сервис «Список покупок». Он позволит создавать список продуктов, которые нужно купить для приготовления выбранных блюд.
 
-Автор: Петрачкова Юлия
+Автор: Петрачкова Юлия, ИКБО-02-22
 
 
 ## Технологии:
@@ -114,7 +114,11 @@ Python, Django, Django REST Framework, Djoser
     ```bash
     docker-compose exec backend python manage.py load_users
     ```
-4.3. Загрузите рецепты тестовых пользователей:
+4.3. Установите аватары тестовых пользователей:
+    ```bash
+    docker-compose exec backend python manage.py set_default_avatars
+    ```
+4.4. Загрузите рецепты тестовых пользователей:
     ```bash
     docker-compose exec backend python manage.py load_recipes
     ```
@@ -155,6 +159,6 @@ Python, Django, Django REST Framework, Djoser
 ## Форматирование кода
 
 Форматирование кода выполнено согласно PEP-8, используя:
-    - https://pypi.org/project/isort/
-    - https://pypi.org/project/black/
-    - https://pypi.org/project/pep8/
+- https://pypi.org/project/isort/
+- https://pypi.org/project/black/
+- https://pypi.org/project/pep8/
