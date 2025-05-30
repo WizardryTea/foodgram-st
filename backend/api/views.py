@@ -8,7 +8,7 @@ from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import (
     IsAuthenticated,
-    IsAuthenticatedOrReadOnly,
+    IsAuthenticatedOrReadOnly
 )
 from rest_framework.response import Response
 
@@ -20,19 +20,13 @@ from recipes.models import (
     ShoppingCart,
 )
 from users.models import Subscription, User
-
 from .filters import RecipeFilter
 from .pagination import PagesPagination
 from .permissions import IsAuthorOrReadOnly
-from .serializers import (
-    FavoriteSerializer,
-    IngredientSerializer,
-    RecipeSerializer,
-    ShoppingCartSerializer,
-    SubscribedUserSerializer,
-    SubscriptionSerializer,
-    UserSerializer,
-)
+from .serializers import (FavoriteSerializer, IngredientSerializer,
+                          RecipeReadSerializer, RecipeWriteSerializer,
+                          ShoppingCartSerializer, SubscribedUserSerializer,
+                          SubscriptionSerializer, UserSerializer)
 
 
 class UserViewSet(BaseUserViewSet):
@@ -127,11 +121,37 @@ class IngredientViewSet(viewsets.ReadOnlyModelViewSet):
 
 class RecipeViewSet(viewsets.ModelViewSet):
     queryset = Recipe.objects.all()
-    serializer_class = RecipeSerializer
     permission_classes = [IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly]
     pagination_class = PagesPagination
     filter_backends = [DjangoFilterBackend]
     filterset_class = RecipeFilter
+
+    def get_serializer_class(self):
+        if self.action in ["create", "update", "partial_update"]:
+            return RecipeWriteSerializer
+        return RecipeReadSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        recipe = serializer.save()
+        read_serializer = RecipeReadSerializer(
+            recipe, context={"request": request}
+        )
+        return Response(read_serializer.data, status=status.HTTP_201_CREATED)
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop("partial", False)
+        instance = self.get_object()
+        serializer = self.get_serializer(
+            instance, data=request.data, partial=partial
+        )
+        serializer.is_valid(raise_exception=True)
+        recipe = serializer.save()
+        read_serializer = RecipeReadSerializer(
+            recipe, context={"request": request}
+        )
+        return Response(read_serializer.data)
 
     def _toggle_favorite_or_shopping_cart(self, request, recipe, model):
         serializer_class = (

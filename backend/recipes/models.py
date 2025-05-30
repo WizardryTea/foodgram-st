@@ -1,4 +1,3 @@
-# Create your models here.
 from django.core.validators import MinValueValidator
 from django.db import models
 
@@ -7,7 +6,7 @@ from constants import (
     INGREDIENT_NAME_MAX_LENGTH,
     RECIPE_INGREDIENT_MIN_AMOUNT,
     RECIPE_MIN_COOKING_TIME,
-    RECIPE_NAME_MAX_LENGTH,
+    RECIPE_NAME_MAX_LENGTH
 )
 from users.models import User
 
@@ -55,7 +54,7 @@ class Recipe(models.Model):
 
     image = models.ImageField(
         verbose_name="Изображение",
-        upload_to="recipes/",  # Сохранение в data/images/recipes/
+        upload_to="recipes/",
         blank=True,
         null=True,
     )

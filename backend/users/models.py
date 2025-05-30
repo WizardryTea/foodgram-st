@@ -1,4 +1,3 @@
-# Create your models here.
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from django.db import models
@@ -84,7 +83,11 @@ class Subscription(models.Model):
         constraints = [
             models.UniqueConstraint(
                 fields=["follower", "author"], name="unique_subscription"
-            )
+            ),
+            models.CheckConstraint(
+                check=~models.Q(follower=models.F("author")),
+                name="prevent_self_subscription",
+            ),
         ]
         verbose_name = "Подписка"
         verbose_name_plural = "Подписки"

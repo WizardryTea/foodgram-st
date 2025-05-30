@@ -4,8 +4,6 @@ from django.utils.html import format_html
 
 from .models import Subscription, User
 
-# Register your models here.
-
 
 @admin.register(User)
 class UserAdmin(UserAdmin):
