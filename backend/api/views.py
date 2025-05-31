@@ -24,7 +24,7 @@ from recipes.models import (
     ShoppingCart,
 )
 from users.models import Subscription, User
-from .filters import RecipeFilter
+from .filters import IngredientFilter, RecipeFilter
 from .pagination import PagesPagination
 from .permissions import IsAuthorOrReadOnly
 from .serializers import (FavoriteSerializer, IngredientSerializer,
@@ -107,13 +107,6 @@ class UserViewSet(BaseUserViewSet):
             paginated_subscriptions, many=True, context={"request": request}
         )
         return self.get_paginated_response(serializer.data)
-
-
-class IngredientFilter(FilterSet):
-    name = CharFilter(
-        field_name="name",
-        lookup_expr="istartswith",
-    )
 
     class Meta:
         model = Ingredient

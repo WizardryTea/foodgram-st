@@ -23,3 +23,10 @@ class RecipeFilter(filters.FilterSet):
         if value and self.request.user.is_authenticated:
             return queryset.filter(shoppingcarts__user=self.request.user)
         return queryset
+
+
+class IngredientFilter(filters.FilterSet):
+    name = filters.CharFilter(
+        field_name="name",
+        lookup_expr="istartswith",
+    )
