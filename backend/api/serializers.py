@@ -45,6 +45,9 @@ class IngredientSerializer(serializers.ModelSerializer):
 
 
 class RecipeIngredientSerializer(serializers.ModelSerializer):
+    """
+    Сериализатор ингредиентов в рецепте
+    """
     id = serializers.PrimaryKeyRelatedField(
         queryset=Ingredient.objects.all(), source="ingredient.id"
     )
@@ -52,16 +55,21 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
     measurement_unit = serializers.ReadOnlyField(
         source="ingredient.measurement_unit"
     )
-    amount = serializers.IntegerField()
 
     class Meta:
         model = RecipeIngredient
         fields = ("id", "name", "measurement_unit", "amount")
-        extra_kwargs = {"amount": {"min_value": RECIPE_INGREDIENT_MIN_AMOUNT}}
+        min_value = RECIPE_INGREDIENT_MIN_AMOUNT
 
 
 class RecipeIngredientWriteSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField()
+    """
+    Сериализатор для создания и обновления ингредиентов в рецепте
+    """
+    id = serializers.PrimaryKeyRelatedField(
+        queryset=Ingredient.objects.all(),
+        source="ingredient"
+    )
     amount = serializers.IntegerField(min_value=RECIPE_INGREDIENT_MIN_AMOUNT)
 
     class Meta:
@@ -70,6 +78,9 @@ class RecipeIngredientWriteSerializer(serializers.ModelSerializer):
 
 
 class RecipeWriteSerializer(serializers.ModelSerializer):
+    """
+    Сериализатор для создания и обновления рецептов
+    """
     ingredients = RecipeIngredientWriteSerializer(many=True)
     image = Base64ImageField()
 
@@ -120,10 +131,6 @@ class RecipeWriteSerializer(serializers.ModelSerializer):
         return recipe
 
     def update(self, instance, validated_data):
-        if "ingredients" not in validated_data:
-            raise serializers.ValidationError(
-                {"detail": 'Поле "ingredients" обязательно для обновления.'}
-            )
         ingredients_data = validated_data.pop("ingredients")
         instance.ingredients.clear()
         self._save_ingredients(instance, ingredients_data)
