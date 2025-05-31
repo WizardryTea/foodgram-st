@@ -3,8 +3,6 @@ from django.http import HttpResponse
 from django.utils import timezone
 from django_filters.rest_framework import (
     DjangoFilterBackend,
-    CharFilter,
-    FilterSet,
 )
 from djoser.views import UserViewSet as BaseUserViewSet
 from rest_framework import status, viewsets
