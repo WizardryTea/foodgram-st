@@ -8,7 +8,6 @@ class RecipeFilter(filters.FilterSet):
     is_in_shopping_cart = filters.CharFilter(
         method="filter_is_in_shopping_cart"
     )
-    author = filters.NumberFilter(field_name="author__id")
 
     def filter_is_favorited(self, queryset, name, value):
         if value and self.request.user.is_authenticated:
